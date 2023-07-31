@@ -18,6 +18,12 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+// your first API endpoint... 
+app.get("/api/:date", function (req, res) {
+  date = new Date(req.query.date)
+  console.log(date)
+  res.json({greeting: 'hello API', unix:"", utc:""});
+});
 
 // your first API endpoint... 
 app.get("/api/hello", function (req, res) {
