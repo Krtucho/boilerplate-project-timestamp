@@ -19,27 +19,25 @@ app.get("/", function (req, res) {
 });
 
 // your first API endpoint... 
-app.get("/api/:date", function (req, res) {
-  const { date } = req.params;
-  let timestamp = parseInt(date);
+app.get('/api/:date?', (req, res) => {
+  let dateStr = req.params.date;
+  let date;
 
-  // Si el valor es un tiempo Unix, convertir a milisegundos
-  if (!isNaN(timestamp)) {
-    timestamp *= 1000;
+  if (!dateStr) { // Si el parámetro está vacío, usar la fecha actual
+    date = new Date();
+  } else {
+    date = new Date(dateStr);
   }
 
-  const dateObj = new Date(timestamp);
-  const isValidDate = !isNaN(dateObj.getTime());
-
-  // Crear el objeto de respuesta
-  const response = isValidDate ? {
-    unix: dateObj.getTime() / 1000,
-    utc: dateObj.toUTCString()
-  } : {
-    error: 'Invalid Date'
-  };
-
-  res.json(response);
+  // Verificar si la fecha es válida
+  if (isNaN(date.getTime())) {
+    res.json({ error: 'Invalid Date' });
+  } else {
+    res.json({
+      unix: date.getTime(),
+      utc: date.toUTCString()
+    });
+  }
 });
 
 // your first API endpoint... 
