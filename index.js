@@ -26,7 +26,7 @@ app.get('/api/:date?', (req, res) => {
   if (!dateStr) { // Si el parámetro está vacío, usar la fecha actual
     date = new Date();
   } 
-  else if(/^\d+$/.test(dateStr) { // Si el valor es un timestamp Unix
+  else if(/^\d+$/.test(dateStr)) { // Si el valor es un timestamp Unix
     date = new Date(parseInt(dateStr));
   } 
   else {
